@@ -1,0 +1,96 @@
+[stages.headers]
+downloader_max_concurrent_requests = {{ reth_stages_headers_downloader_max_concurrent_requests }}
+downloader_min_concurrent_requests = {{ reth_stages_headers_downloader_min_concurrent_requests }}
+downloader_max_buffered_responses = {{ reth_stages_headers_downloader_max_buffered_responses }}
+downloader_request_limit = {{ reth_stages_headers_downloader_request_limit }}
+commit_threshold = {{ reth_stages_headers_commit_threshold }}
+
+[stages.bodies]
+downloader_request_limit = {{ reth_stages_bodies_downloader_request_limit }}
+downloader_stream_batch_size = {{ reth_stages_bodies_downloader_stream_batch_size }}
+downloader_max_buffered_blocks_size_bytes = {{ reth_stages_bodies_downloader_max_buffered_blocks_size_bytes }}
+downloader_min_concurrent_requests = {{ reth_stages_bodies_downloader_min_concurrent_requests }}
+downloader_max_concurrent_requests = {{ reth_stages_bodies_downloader_max_concurrent_requests }}
+
+[stages.sender_recovery]
+commit_threshold = {{ reth_stages_sender_recovery_commit_threshold }}
+
+[stages.execution]
+max_blocks = {{ reth_stages_execution_max_blocks }}
+max_changes = {{ reth_stages_execution_max_changes }}
+max_cumulative_gas = {{ reth_stages_execution_max_cumulative_gas }}
+max_duration = "{{ reth_stages_execution_max_duration }}"
+
+[stages.prune]
+commit_threshold = {{ reth_stages_prune_commit_threshold }}
+
+[stages.account_hashing]
+clean_threshold = {{ reth_stages_account_hashing_clean_threshold }}
+commit_threshold = {{ reth_stages_account_hashing_commit_threshold }}
+
+[stages.storage_hashing]
+clean_threshold = {{ reth_stages_storage_hashing_clean_threshold }}
+commit_threshold = {{ reth_stages_storage_hashing_commit_threshold }}
+
+[stages.merkle]
+clean_threshold = {{ reth_stages_merkle_clean_threshold }}
+
+[stages.transaction_lookup]
+chunk_size = {{ reth_stages_transaction_lookup_chunk_size }}
+
+[stages.index_account_history]
+commit_threshold = {{ reth_stages_index_account_history_commit_threshold }}
+
+[stages.index_storage_history]
+commit_threshold = {{ reth_stages_index_storage_history_commit_threshold }}
+
+[stages.etl]
+file_size = {{ reth_stages_etl_file_size }}
+
+[peers]
+refill_slots_interval = "{{ reth_peers_refill_slots_interval }}"
+trusted_nodes = [{% for peer_url in reth_peers_trusted_nodes %}"{{ peer_url }}"{% if not loop.last %},{% endif %}{% endfor %}]
+trusted_nodes_only = {{ reth_peers_trusted_nodes_only }}
+max_backoff_count = {{ reth_peers_max_backoff_count }}
+ban_duration = "{{ reth_peers_ban_duration }}"
+incoming_ip_throttle_duration = "{{ reth_peers_incoming_ip_throttle_duration }}"
+
+[peers.connection_info]
+max_outbound = {{ reth_peers_connection_info_max_outbound }}
+max_inbound = {{ reth_peers_connection_info_max_inbound }}
+max_concurrent_outbound_dials = {{ reth_peers_connection_info_max_concurrent_outbound_dials }}
+
+[peers.reputation_weights]
+bad_message = {{ reth_peers_reputation_weights_bad_message }}
+bad_block = {{ reth_peers_reputation_weights_bad_block }}
+bad_transactions = {{ reth_peers_reputation_weights_bad_transactions }}
+already_seen_transactions = {{ reth_peers_reputation_weights_already_seen_transactions }}
+timeout = {{ reth_peers_reputation_weights_timeout }}
+bad_protocol = {{ reth_peers_reputation_weights_bad_protocol }}
+failed_to_connect = {{ reth_peers_reputation_weights_failed_to_connect }}
+dropped = {{ reth_peers_reputation_weights_dropped }}
+bad_announcement = {{ reth_peers_reputation_weights_bad_announcement }}
+
+[peers.backoff_durations]
+low = "{{ reth_peers_backoff_durations_low }}"
+medium = "{{ reth_peers_backoff_durations_medium }}"
+high = "{{ reth_peers_backoff_durations_high }}"
+max = "{{ reth_peers_backoff_durations_max }}"
+
+[sessions]
+session_command_buffer = {{ reth_sessions_session_command_buffer }}
+session_event_buffer = {{ reth_sessions_session_event_buffer }}
+
+[sessions.limits]
+
+[sessions.initial_internal_request_timeout]
+secs = {{ reth_sessions_initial_internal_request_timeout_secs }}
+nanos = {{ reth_sessions_initial_internal_request_timeout_nanos }}
+
+[sessions.protocol_breach_request_timeout]
+secs = {{ reth_sessions_protocol_breach_request_timeout_secs }}
+nanos = {{ reth_sessions_protocol_breach_request_timeout_nanos }}
+
+[sessions.pending_session_timeout]
+secs = {{ reth_sessions_pending_session_timeout_secs }}
+nanos = {{ reth_sessions_pending_session_timeout_nanos }}

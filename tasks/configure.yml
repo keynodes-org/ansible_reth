@@ -1,0 +1,22 @@
+---
+- name: Reth - check if JWT secret exists
+  ansible.builtin.stat:
+    path: "{{ reth_jwt_secret_path }}"
+  register: jwt_secret_file
+
+- name: Reth - generate JWT secret if not exists
+  ansible.builtin.command: "openssl rand -hex -out {{ reth_jwt_secret_path }} 32"
+  args:
+    creates: "{{ reth_jwt_secret_path }}"
+  when: not jwt_secret_file.stat.exists
+  become: true
+
+- name: Reth - copy configuration file
+  ansible.builtin.template:
+    src: config.toml.j2
+    dest: "{{ reth_dir_config }}/config.toml"
+    owner: "{{ reth_user }}"
+    group: "{{ reth_group }}"
+    mode: "0644"
+  notify:
+    - reth - restart

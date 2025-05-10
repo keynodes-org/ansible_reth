@@ -1,0 +1,32 @@
+---
+- name: Reth - check reth is installed
+  ansible.builtin.stat:
+    path: "{{ reth_binary_path }}"
+  register: reth_binary
+
+- name: Reth - download and extract binary
+  ansible.builtin.unarchive:
+    src: "{{ reth_binary_download_url }}"
+    dest: "{{ reth_dir_binary }}"
+    owner: "{{ reth_user }}"
+    group: "{{ reth_group }}"
+    remote_src: true
+    mode: "0755"
+  when: (not reth_binary.stat.exists) or (reth_reinstall)
+
+- name: Reth - write systemd unit
+  ansible.builtin.template:
+    src: service.j2
+    dest: "{{ reth_dir_systemd }}/{{ reth_systemd_service_name }}.service"
+    owner: "{{ reth_user }}"
+    group: "{{ reth_group }}"
+    mode: "0644"
+  notify:
+    - reth - restart
+
+- name: Reth - ensure service started
+  ansible.builtin.systemd:
+    name: "{{ reth_systemd_service_name }}"
+    state: started
+    daemon_reload: true
+    enabled: true

@@ -1,0 +1,7 @@
+ansible-core==2.17.*
+ansible-doctor==1.4.8
+Jinja2==3.1.2
+molecule==25.2.0
+docker==7.1.0
+molecule-plugins==23.7.0
+pytest-testinfra==6.5.0

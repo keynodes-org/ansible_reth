@@ -1,0 +1,32 @@
+[Unit]
+Description=Reth Execution Client ({{ reth_chain | default('mainnet') }})
+Documentation=https://reth.rs
+After=network.target
+Wants=network.target
+
+[Service]
+User={{ reth_user }}
+Group={{ reth_group }}
+Type=simple
+Restart={{ reth_systemd_restart_policy }}
+RestartSec={{ reth_systemd_restart_sec }}
+TimeoutStopSec={{ reth_systemd_stop_timeout_sec }}
+
+ExecStart={{ reth_binary_path }} node \
+    --config {{ reth_config_file }} \
+    --datadir {{ reth_dir_data }} \
+    --chain {{ reth_chain }} \
+{% set merged_cli_options = (reth_cli_default_options | default([])) + (reth_cli_custom_options | default([])) %}
+{% for option in merged_cli_options %}
+    {{ option }}{% if not loop.last %} \{% endif %}
+{% endfor %}
+
+
+{% for directive in reth_extra_systemd_directives | default([]) %}
+{{ directive }}
+{% endfor %}
+
+LimitNOFILE={{ reth_systemd_limit_nofile }}
+
+[Install]
+WantedBy=multi-user.target
