@@ -1,3 +1,5 @@
+#jinja2: trim_blocks:True, lstrip_blocks:True
+
 [Unit]
 Description=Reth Execution Client ({{ reth_chain | default('mainnet') }})
 Documentation=https://reth.rs
@@ -18,8 +20,13 @@ ExecStart={{ reth_binary_path }} node \
     --chain {{ reth_chain }} \
 {% set merged_cli_options = (reth_cli_default_options | default([])) + (reth_cli_custom_options | default([])) %}
 {% for option in merged_cli_options %}
-    {{ option }}{% if not loop.last %} \{% endif %}
+{% if loop.last %}
+    {{ option }}
+{% else %}
+    {{ option }} \
+{% endif %}
 {% endfor %}
+
 
 
 {% for directive in reth_extra_systemd_directives | default([]) %}

@@ -1069,7 +1069,7 @@ reth_cli_default_options:
   - "--metrics={{ reth_metrics_listen_addr }}:{{ reth_metrics_listen_port }}"
   - "--authrpc.jwtsecret={{ reth_authrpc_jwtsecret }}"
   - "--log.file.directory={{ reth_dir_log }}"
-  - "{{ reth_verbosity }}"
+  - "--{{ reth_verbosity }}"
 
 
 # @var reth_cli_custom_flags:description: >

@@ -22,7 +22,7 @@
     group: "{{ reth_group }}"
     mode: "0644"
   notify:
-    - reth - restart
+    - Reth - restart
 
 - name: Reth - ensure service started
   ansible.builtin.systemd:

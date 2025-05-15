@@ -50,7 +50,7 @@ file_size = {{ reth_stages_etl_file_size }}
 [peers]
 refill_slots_interval = "{{ reth_peers_refill_slots_interval }}"
 trusted_nodes = [{% for peer_url in reth_peers_trusted_nodes %}"{{ peer_url }}"{% if not loop.last %},{% endif %}{% endfor %}]
-trusted_nodes_only = {{ reth_peers_trusted_nodes_only }}
+trusted_nodes_only = {{ reth_peers_trusted_nodes_only | lower }}
 max_backoff_count = {{ reth_peers_max_backoff_count }}
 ban_duration = "{{ reth_peers_ban_duration }}"
 incoming_ip_throttle_duration = "{{ reth_peers_incoming_ip_throttle_duration }}"
