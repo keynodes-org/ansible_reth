@@ -47,6 +47,14 @@ commit_threshold = {{ reth_stages_index_storage_history_commit_threshold }}
 [stages.etl]
 file_size = {{ reth_stages_etl_file_size }}
 
+[prune]
+block_interval = {{ reth_prune_block_interval }}
+sender_recovery = { distance = {{ reth_prune_segments_sender_recovery_distance }} }
+transaction_lookup = "{{ reth_prune_segments_transaction_lookup }}"
+receipts = { before = {{ reth_prune_segments_receipts_before }} }
+account_history = { distance = {{ reth_prune_segments_account_history_distance }} }
+storage_history = { distance = {{ reth_prune_segments_storage_history_distance }} }
+
 [peers]
 refill_slots_interval = "{{ reth_peers_refill_slots_interval }}"
 trusted_nodes = [{% for peer_url in reth_peers_trusted_nodes %}"{{ peer_url }}"{% if not loop.last %},{% endif %}{% endfor %}]

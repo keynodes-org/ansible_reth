@@ -1,12 +1,19 @@
 ---
 logging:
   level: info
-custom_header: doctor/readme/HEADER.md
 exclude_files:
   - collections/
   - molecule/
   - files/
   - venv/
-force_overwrite: true
-template_dir: doctor
-template: readme
+
+template:
+  name: readme
+  src: local>doctor/
+  include_header: doctor/readme/HEADER.md
+  force_overwrite: false
+role:
+  name: ansible_reth
+  # Auto-detect if the given directory is a role, can be disabled
+  # to parse loose files instead.
+  autodetect: true

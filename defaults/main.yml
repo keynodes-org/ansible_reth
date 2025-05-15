@@ -50,25 +50,6 @@ reth_chain: sepolia
 # The path to the TOML configuration file to use.
 reth_config_file: "{{ reth_dir_config }}/config.toml"
 
-
-# @var reth_instance:description: >
-# Add a new instance of a node.
-# Configures the ports of the node to avoid conflicts with the defaults.
-# This is useful for running multiple nodes on the same machine.
-# Max number of instances is 200.
-# Changes to the following port numbers:
-# - `DISCOVERY_PORT`: default + `instance` - 1
-# - `AUTH_PORT`: default + `instance` * 100 - 100
-# - `HTTP_RPC_PORT`: default - `instance` + 1
-# - `WS_RPC_PORT`: default + `instance` * 2 - 2
-# - `IPC_PATH`: default + `-instance`
-reth_instance: 1
-
-# @var reth_with_unused_ports:description: >
-# Sets all ports to unused, allowing the OS to choose random unused ports when sockets are bound.
-# Mutually exclusive with `reth_instance`.
-reth_with_unused_ports: false
-
 # @var reth_metrics_listen_addr:description: >
 # The metrics will be served at the given addr.
 reth_metrics_listen_addr: 127.0.0.1
@@ -76,170 +57,6 @@ reth_metrics_listen_addr: 127.0.0.1
 # @var reth_metrics_listen_port:description: >
 # The metrics will be served at the given port.
 reth_metrics_listen_port: 9000
-
-
-# @var reth_datadir_static_files:description: >
-# The absolute path to store static files in.
-reth_dir_data_static_files: "{{ reth_dir_data }}/static"
-
-# @var reth_disable_discovery:description: >
-# Disable the discovery service.
-reth_disable_discovery: false
-
-# @var reth_disable_dns_discovery:description: >
-# Disable the DNS discovery.
-reth_disable_dns_discovery: false
-
-# @var reth_disable_discv4_discovery:description: >
-# Disable Discv4 discovery.
-reth_disable_discv4_discovery: false
-
-# @var reth_enable_discv5_discovery:description: >
-# Enable Discv5 discovery.
-reth_enable_discv5_discovery: false
-
-# @var reth_disable_nat:description: >
-# Disable Nat discovery.
-reth_disable_nat: false
-
-# @var reth_discovery_addr:description: >
-# The UDP address to use for devp2p peer discovery version 4.
-reth_discovery_addr: "0.0.0.0"
-
-# @var reth_discovery_port:description: >
-# The UDP port to use for devp2p peer discovery version 4.
-reth_discovery_port: 30303
-
-# @var reth_discovery_v5_addr:description: >
-# The UDP IPv4 address to use for devp2p peer discovery version 5.
-# Overwritten by `RLPx` address, if it's also IPv4.
-reth_discovery_v5_addr: "{{ ansible_default_ipv4 }}"
-
-# @var reth_discovery_v5_addr_ipv6:description: >
-# The UDP IPv6 address to use for devp2p peer discovery version 5.
-# Overwritten by `RLPx` address, if it's also IPv6.
-reth_discovery_v5_addr_ipv6: "{{ ansible_default_ipv6 }}"
-
-# @var reth_discovery_v5_port:description: >
-# The UDP IPv4 port to use for devp2p peer discovery version 5.
-# Not used unless `--addr` is IPv4, or `--discovery.v5.addr` is set.
-reth_discovery_v5_port: 9200
-
-# @var reth_discovery_v5_port_ipv6:description: >
-# The UDP IPv6 port to use for devp2p peer discovery version 5.
-# Not used unless `--addr` is IPv6, or `--discovery.addr.ipv6` is set.
-reth_discovery_v5_port_ipv6: 9200
-
-# @var reth_discovery_v5_lookup_interval:description: >
-# The interval in seconds at which to carry out periodic lookup queries, for the whole run of the program.
-reth_discovery_v5_lookup_interval: 20
-
-# @var reth_discovery_v5_bootstrap_lookup_interval:description: >
-# The interval in seconds at which to carry out boost lookup queries, for a fixed number of times, at bootstrap.
-reth_discovery_v5_bootstrap_lookup_interval: 5
-
-# @var reth_discovery_v5_bootstrap_lookup_countdown:description: >
-# The number of times to carry out boost lookup queries at bootstrap.
-reth_discovery_v5_bootstrap_lookup_countdown: 200
-
-# @var reth_trusted_peers:description: >
-# Comma separated enode URLs of trusted peers for P2P connections.
-# Example: "enode://abcd@192.168.0.1:30303,enode://efgh@192.168.0.2:30303"
-reth_trusted_peers: ""
-
-# @var reth_trusted_only:description: >
-# Connect to or accept from trusted peers only.
-reth_trusted_only: false
-
-# @var reth_bootnodes:description: >
-# Comma separated enode URLs for P2P discovery bootstrap.
-# Will fall back to a network-specific default if not specified.
-reth_bootnodes: ""
-
-# @var reth_dns_retries:description: >
-# Amount of DNS resolution requests retries to perform when peering.
-reth_dns_retries: 0
-
-# @var reth_peers_file:description: >
-# The path to the known peers file. Connected peers are dumped to this file on nodes shutdown, and read on startup.
-# Cannot be used with `reth_no_persist_peers`.
-reth_peers_file: <FILE_PATH> # e.g., /opt/reth/peers.json
-
-# @var reth_identity:description: >
-# Custom node identity.
-reth_identity: "reth/<VERSION>-<SHA>/<ARCH>"
-
-# @var reth_p2p_secret_key:description: >
-# Secret key to use for this node.
-# This will also deterministically set the peer ID.
-# If not specified, it will be set in the data dir for the chain being used.
-reth_p2p_secret_key: "{{ reth_dir_config }}/reth_p2p_secret"
-
-# @var reth_no_persist_peers:description: >
-# Do not persist peers.
-reth_no_persist_peers: false
-
-# @var reth_nat:description: >
-# NAT resolution method (any|none|upnp|publicip|extip:<IP>).
-reth_nat: any
-
-# @var reth_addr:description: >
-# Network listening address.
-reth_addr: "0.0.0.0"
-
-# @var reth_port:description: >
-# Network listening port.
-reth_port: 30303
-
-# @var reth_max_outbound_peers:description: >
-# Maximum number of outbound requests.
-reth_max_outbound_peers: 100
-
-# @var reth_max_inbound_peers:description: >
-# Maximum number of inbound requests.
-reth_max_inbound_peers: 30
-
-# @var reth_max_tx_reqs:description: >
-# Max concurrent `GetPooledTransactions` requests.
-reth_max_tx_reqs: 130
-
-# @var reth_max_tx_reqs_peer:description: >
-# Max concurrent `GetPooledTransactions` requests per peer.
-reth_max_tx_reqs_peer: 1
-
-# @var reth_max_seen_tx_history:description: >
-# Max number of seen transactions to remember per peer. Default is 320 transaction hashes.
-reth_max_seen_tx_history: 320
-
-# @var reth_max_pending_imports:description: >
-# Max number of transactions to import concurrently.
-reth_max_pending_imports: 4096
-
-# @var reth_pooled_tx_response_soft_limit:description: >
-# Experimental, for usage in research. Sets the max accumulated byte size of transactions to pack in one response. Spec'd at 2MiB.
-reth_pooled_tx_response_soft_limit: 2097152 # 2MiB
-
-# @var reth_pooled_tx_pack_soft_limit:description: >
-# Experimental, for usage in research. Sets the max accumulated byte size of transactions to request in one request.
-# Since `RLPx` protocol version 68, the byte size of a transaction is shared as metadata in a transaction announcement.
-# This allows a node to request a specific size response.
-# By default, nodes request only 128 KiB worth of transactions, but should a peer request more, up to 2 MiB, a node will answer with more than 128 KiB.
-# Default is 128 KiB.
-reth_pooled_tx_pack_soft_limit: 131072 # 128KiB
-
-# @var reth_max_tx_pending_fetch:description: >
-# Max capacity of cache of hashes for transactions pending fetch.
-reth_max_tx_pending_fetch: 25600
-
-# @var reth_net_if_experimental:description: >
-# Name of network interface used to communicate with peers.
-# If flag is set, but no value is passed, the default interface for docker `eth0` is tried.
-reth_net_if_experimental: <IF_NAME> # e.g., eth0 or omit for default behavior
-
-# @var reth_tx_propagation_policy:description: >
-# Transaction Propagation Policy. The policy determines which peers transactions are gossiped to.
-reth_tx_propagation_policy: All
-
 
 # @var reth_http_addr:description: >
 # Http server address to listen on.
@@ -259,33 +76,6 @@ reth_http_api: "eth,net,web3,admin"
 # Http Corsdomain to allow request from.
 reth_http_corsdomain: "*"
 
-# @var reth_ws_addr:description: >
-# Ws server address to listen on.
-reth_ws_addr: "127.0.0.1"
-
-# @var reth_ws_port:description: >
-# Ws server port to listen on.
-reth_ws_port: 8546
-
-# @var reth_ws_origins:description: >
-# Origins from which to accept `WebSocket` requests.
-# Comma-separated string e.g., "http://localhost:3000,https://example.com".
-reth_ws_origins: "*"
-
-# @var reth_ws_api:description: >
-# Rpc Modules to be configured for the WS server.
-# Possible values: admin, debug, eth, net, trace, txpool, web3, rpc, reth, ots, flashbots, miner, mev.
-# Comma-separated string e.g., "eth,net,web3".
-reth_ws_api: ""
-
-# @var reth_ipcdisable:description: >
-# Disable the IPC-RPC server.
-reth_ipcdisable: false
-
-# @var reth_ipcpath:description: >
-# Filename for IPC socket/pipe within the datadir.
-reth_ipcpath: "{{ reth_dir_data }}/ipc" # Reth replaces <CACHE_DIR> automatically
-
 # @var reth_authrpc_addr:description: >
 # Auth server address to listen on.
 reth_authrpc_addr: "127.0.0.1"
@@ -294,505 +84,31 @@ reth_authrpc_addr: "127.0.0.1"
 # Auth server port to listen on.
 reth_authrpc_port: 8551
 
-# @var reth_authrpc_jwtsecret:description: >
-# Path to a JWT secret to use for the authenticated engine-API RPC server.
-reth_authrpc_jwtsecret: "{{ reth_dir_config }}/jwt.hex"
-
-# @var reth_auth_ipc:description: >
-# Enable auth engine API over IPC.
-reth_auth_ipc: false
-
-# @var reth_auth_ipc_path:description: >
-# Filename for auth IPC socket/pipe within the datadir.
-reth_auth_ipc_path: "<CACHE_DIR>_engine_api.ipc" # Reth replaces <CACHE_DIR> automatically
-
-# @var reth_rpc_jwtsecret:description: >
-# Hex encoded JWT secret to authenticate the regular RPC server(s), see `reth_http_api` and `reth_ws_api`.
-# This is __not__ used for the authenticated engine-API RPC server, see `reth_authrpc_jwtsecret`.
-reth_rpc_jwtsecret: ""
-
-# @var reth_rpc_max_request_size:description: >
-# Set the maximum RPC request payload size for both HTTP and WS in megabytes.
-reth_rpc_max_request_size: 15
-
-# @var reth_rpc_max_response_size:description: >
-# Set the maximum RPC response payload size for both HTTP and WS in megabytes.
-reth_rpc_max_response_size: 160
-
-# @var reth_rpc_max_subscriptions_per_connection:description: >
-# Set the maximum concurrent subscriptions per connection.
-reth_rpc_max_subscriptions_per_connection: 1024
-
-# @var reth_rpc_max_connections:description: >
-# Maximum number of RPC server connections.
-reth_rpc_max_connections: 500
-
-# @var reth_rpc_max_tracing_requests:description: >
-# Maximum number of concurrent tracing requests.
-# By default this chooses a sensible value based on the number of available cores.
-# Tracing requests are generally CPU bound. Choosing a value that is higher than the available CPU cores can have a negative impact on the performance.
-reth_rpc_max_tracing_requests: "{{ ansible_processor_vcpus }}"
-
-# @var reth_rpc_max_trace_filter_blocks:description: >
-# Maximum number of blocks for `trace_filter` requests.
-reth_rpc_max_trace_filter_blocks: 100
-
-# @var reth_rpc_max_blocks_per_filter:description: >
-# Maximum number of blocks that could be scanned per filter request. (0 = entire chain).
-reth_rpc_max_blocks_per_filter: 100000
-
-# @var reth_rpc_max_logs_per_response:description: >
-# Maximum number of logs that can be returned in a single response. (0 = no limit).
-reth_rpc_max_logs_per_response: 20000
-
-# @var reth_rpc_gascap:description: >
-# Maximum gas limit for `eth_call` and call tracing RPC methods.
-reth_rpc_gascap: 50000000
-
-# @var reth_rpc_txfeecap:description: >
-# Maximum eth transaction fee that can be sent via the RPC APIs (0 = no cap).
-reth_rpc_txfeecap: 1.0
-
-# @var reth_rpc_max_simulate_blocks:description: >
-# Maximum number of blocks for `eth_simulateV1` call.
-reth_rpc_max_simulate_blocks: 256
-
-# @var reth_rpc_eth_proof_window:description: >
-# The maximum proof window for historical proof generation.
-# This value allows for generating historical proofs up to configured number of blocks from current tip (up to `tip - window`).
-reth_rpc_eth_proof_window: 0
-
-# @var reth_rpc_proof_permits:description: >
-# Maximum number of concurrent getproof requests.
-reth_rpc_proof_permits: 25
-
-# @var reth_builder_disallow:description: >
-# Path to file containing disallowed addresses, json-encoded list of strings.
-# Block validation API will reject blocks containing transactions from these addresses.
-reth_builder_disallow: <PATH_TO_DISALLOW_FILE>
-
-# @var reth_rpc_cache_max_blocks:description: >
-# Max number of blocks in RPC cache.
-reth_rpc_cache_max_blocks: 5000
-
-# @var reth_rpc_cache_max_receipts:description: >
-# Max number receipts in RPC cache.
-reth_rpc_cache_max_receipts: 2000
-
-# @var reth_rpc_cache_max_headers:description: >
-# Max number of headers in RPC cache.
-reth_rpc_cache_max_headers: 1000
-
-# @var reth_rpc_cache_max_concurrent_db_requests:description: >
-# Max number of concurrent database requests for RPC cache.
-reth_rpc_cache_max_concurrent_db_requests: 512
-
-# @var reth_gpo_blocks:description: >
-# Number of recent blocks to check for gas price.
-reth_gpo_blocks: 20
-
-# @var reth_gpo_ignoreprice:description: >
-# Gas Price below which gpo will ignore transactions.
-reth_gpo_ignoreprice: 2
-
-# @var reth_gpo_maxprice:description: >
-# Maximum transaction priority fee(or gasprice before London Fork) to be recommended by gpo.
-reth_gpo_maxprice: 500000000000
-
-# @var reth_gpo_percentile:description: >
-# The percentile of gas prices to use for the estimate.
-reth_gpo_percentile: 60
-
-# @var reth_txpool_pending_max_count:description: >
-# Max number of transaction in the pending sub-pool.
-reth_txpool_pending_max_count: 10000
-
-# @var reth_txpool_pending_max_size:description: >
-# Max size of the pending sub-pool in megabytes.
-reth_txpool_pending_max_size: 20
-
-# @var reth_txpool_basefee_max_count:description: >
-# Max number of transaction in the basefee sub-pool.
-reth_txpool_basefee_max_count: 10000
-
-# @var reth_txpool_basefee_max_size:description: >
-# Max size of the basefee sub-pool in megabytes.
-reth_txpool_basefee_max_size: 20
-
-# @var reth_txpool_queued_max_count:description: >
-# Max number of transaction in the queued sub-pool.
-reth_txpool_queued_max_count: 10000
-
-# @var reth_txpool_queued_max_size:description: >
-# Max size of the queued sub-pool in megabytes.
-reth_txpool_queued_max_size: 20
-
-# @var reth_txpool_blobpool_max_count:description: >
-# Max number of transaction in the blobpool.
-reth_txpool_blobpool_max_count: 10000
-
-# @var reth_txpool_blobpool_max_size:description: >
-# Max size of the blobpool in megabytes.
-reth_txpool_blobpool_max_size: 20
-
-# @var reth_txpool_blob_cache_size:description: >
-# Max number of entries for the in memory cache of the blob store.
-reth_txpool_blob_cache_size: <COUNT> # No default specified, needs a value
-
-# @var reth_txpool_max_account_slots:description: >
-# Max number of executable transaction slots guaranteed per account.
-reth_txpool_max_account_slots: 16
-
-# @var reth_txpool_pricebump:description: >
-# Price bump (in %) for the transaction pool underpriced check.
-reth_txpool_pricebump: 10
-
-# @var reth_txpool_minimal_protocol_fee:description: >
-# Minimum base fee required by the protocol.
-reth_txpool_minimal_protocol_fee: 7
-
-# @var reth_txpool_gas_limit:description: >
-# The default enforced gas limit for transactions entering the pool.
-reth_txpool_gas_limit: 30000000
-
-# @var reth_blobpool_pricebump:description: >
-# Price bump percentage to replace an already existing blob transaction.
-reth_blobpool_pricebump: 100
-
-# @var reth_txpool_max_tx_input_bytes:description: >
-# Max size in bytes of a single transaction allowed to enter the pool.
-reth_txpool_max_tx_input_bytes: 131072
-
-# @var reth_txpool_max_cached_entries:description: >
-# The maximum number of blobs to keep in the in memory blob cache.
-reth_txpool_max_cached_entries: 100
-
-# @var reth_txpool_nolocals:description: >
-# Flag to disable local transaction exemptions.
-reth_txpool_nolocals: false
-
-# @var reth_txpool_locals:description: >
-# Flag to allow certain addresses as local. Comma-separated list of addresses.
-reth_txpool_locals: "" # e.g., "0xaddress1,0xaddress2"
-
-# @var reth_txpool_no_local_transactions_propagation:description: >
-# Flag to toggle local transaction propagation.
-reth_txpool_no_local_transactions_propagation: false
-
-# @var reth_txpool_additional_validation_tasks:description: >
-# Number of additional transaction validation tasks to spawn.
-reth_txpool_additional_validation_tasks: 1
-
-# @var reth_txpool_max_pending_txns:description: >
-# Maximum number of pending transactions from the network to buffer.
-reth_txpool_max_pending_txns: 2048
-
-# @var reth_txpool_max_new_txns:description: >
-# Maximum number of new transactions to buffer.
-reth_txpool_max_new_txns: 1024
-
-# @var reth_txpool_max_new_pending_txs_notifications:description: >
-# How many new pending transactions to buffer and send to in progress pending transaction iterators.
-reth_txpool_max_new_pending_txs_notifications: 200
-
-# @var reth_txpool_lifetime:description: >
-# Maximum amount of time non-executable transaction are queued (e.g., "10800s", "3h").
-reth_txpool_lifetime: "10800"
-
-# @var reth_txpool_transactions_backup:description: >
-# Path to store the local transaction backup at, to survive node restarts.
-reth_txpool_transactions_backup: "{{ reth_dir_data }}"
-
-# @var reth_txpool_disable_transactions_backup:description: >
-# Disables transaction backup to disk on node shutdown.
-reth_txpool_disable_transactions_backup: false
-
-# @var reth_builder_extradata:description: >
-# Block extra data set by the payload builder.
-reth_builder_extradata: "reth/<VERSION>/<OS>" # Default will be set by reth
-
-# @var reth_builder_gaslimit:description: >
-# Target gas limit for built blocks.
-reth_builder_gaslimit: 36000000
-
-# @var reth_builder_interval:description: >
-# The interval at which the job should build a new payload after the last.
-# Interval is specified in seconds or in milliseconds if the value ends with `ms`: e.g., `50ms` or `1`.
-reth_builder_interval: "1" # 1 second
-
-# @var reth_builder_deadline:description: >
-# The deadline in seconds for when the payload builder job should resolve.
-reth_builder_deadline: 12
-
-# @var reth_builder_max_tasks:description: >
-# Maximum number of tasks to spawn for building a payload.
-reth_builder_max_tasks: 3
-
-# @var reth_debug_terminate:description: >
-# Flag indicating whether the node should be terminated after the pipeline sync.
-reth_debug_terminate: false
-
-# @var reth_debug_tip:description: >
-# Set the chain tip manually for testing purposes. NOTE: This is a temporary flag.
-reth_debug_tip: ""
-
-# @var reth_debug_max_block:description: >
-# Runs the sync only up to the specified block.
-reth_debug_max_block: ""
-
-# @var reth_debug_etherscan:description: >
-# Runs a fake consensus client that advances the chain using recent block hashes on Etherscan.
-# If specified without a URL, uses default Etherscan API. Requires ETHERSCAN_API_KEY env var.
-# Can take an optional ETHERSCAN_API_URL.
-reth_debug_etherscan: <OPTIONAL_ETHERSCAN_API_URL_OR_true_TO_ENABLE> # Set to true or the URL
-
-# @var reth_debug_rpc_consensus_ws:description: >
-# Runs a fake consensus client using blocks fetched from an RPC WebSocket endpoint.
-reth_debug_rpc_consensus_ws: <RPC_WEBSOCKET_URL>
-
-# @var reth_debug_skip_fcu:description: >
-# If provided, the engine will skip `n` consecutive FCUs.
-reth_debug_skip_fcu: <NUMBER_OF_FCUS_TO_SKIP>
-
-# @var reth_debug_skip_new_payload:description: >
-# If provided, the engine will skip `n` consecutive new payloads.
-reth_debug_skip_new_payload: <NUMBER_OF_PAYLOADS_TO_SKIP>
-
-# @var reth_debug_reorg_frequency:description: >
-# If provided, the chain will be reorged at specified frequency.
-reth_debug_reorg_frequency: <FREQUENCY>
-
-# @var reth_debug_reorg_depth:description: >
-# The reorg depth for chain reorgs.
-reth_debug_reorg_depth: <DEPTH>
-
-# @var reth_debug_engine_api_store:description: >
-# The path to store engine API messages at.
-# If specified, all intercepted engine API messages will be written to specified location.
-reth_debug_engine_api_store: "{{ reth_dir_data }}"
-
-# @var reth_debug_invalid_block_hook:description: >
-# Determines which type of invalid block hook to install. Example: `witness,prestate`.
-# Possible values: witness, pre-state, opcode. Comma-separated.
-reth_debug_invalid_block_hook: witness
-
-# @var reth_debug_healthy_node_rpc_url:description: >
-# The RPC URL of a healthy node to use for comparing invalid block hook results against.
-reth_debug_healthy_node_rpc_url: ""
-
-# @var reth_db_log_level:description: >
-# Database logging level. Levels higher than "notice" require a debug build.
-# Possible values: fatal, error, warn, notice, verbose, debug, trace, extra.
-reth_db_log_level: "notice"
-
-# @var reth_db_exclusive:description: >
-# Open environment in exclusive/monopolistic mode. Makes it possible to open a database on an NFS volume.
-# Possible values: true, false.
-reth_db_exclusive: "false"
-
-# @var reth_db_max_size:description: >
-# Maximum database size (e.g., 4TB, 8MB).
-reth_db_max_size: "2TB"
-
-# @var reth_db_growth_step:description: >
-# Database growth step (e.g., 4GB, 4KB).
-reth_db_growth_step: "256MB"
-
-# @var reth_db_read_transaction_timeout:description: >
-# Read transaction timeout in seconds, 0 means no timeout.
-reth_db_read_transaction_timeout: 10
-
-# @var reth_dev:description: >
-# Start the node in dev mode.
-# This mode uses a local proof-of-authority consensus engine with either fixed block times or automatically mined blocks.
-# Disables network discovery and enables local http server.
-# Prefunds 20 accounts derived by mnemonic "test test test test test test test test test test test junk" with 10 000 ETH each.
-reth_dev: false
-
-# @var reth_dev_block_max_transactions:description: >
-# How many transactions to mine per block in dev mode.
-reth_dev_block_max_transactions: <COUNT>
-
-# @var reth_dev_block_time:description: >
-# Interval between blocks in dev mode. Parses strings using humantime::parse_duration (e.g., "12s").
-reth_dev_block_time: <DURATION> # e.g., "12s"
-
-# @var reth_full:description: >
-# Run full node. Only the most recent MINIMUM_PRUNING_DISTANCE block states are stored.
-reth_full: false # This often means archive node is false, or specific pruning settings are applied. Default behavior is full unless archive.
-
-# @var reth_block_interval:description: >
+# [prune]
+# @var reth_prune_block_interval:description: >
 # Minimum pruning interval measured in blocks.
-reth_block_interval: <BLOCK_COUNT>
+reth_prune_block_interval: 5
 
-# @var reth_prune_senderrecovery_full:description: >
-# Prunes all sender recovery data.
-reth_prune_senderrecovery_full: false
+# @var reth_prune_segments_sender_recovery_distance:description: >
+# Prune all transaction senders before the block `head - <distance>`, i.e. keep transaction senders for the last `<distance> + 1` blocks.
+reth_prune_segments_sender_recovery_distance: 100000
 
-# @var reth_prune_senderrecovery_distance:description: >
-# Prune sender recovery data before the `head-N` block number. In other words, keep last N + 1 blocks.
-reth_prune_senderrecovery_distance: <BLOCKS>
+# @var reth_prune_segments_transaction_lookup:description: >
+# Transaction Lookup pruning configuration. "full" indicates pruning all TxNumber => TxHash mappings.
+reth_prune_segments_transaction_lookup: "full"
 
-# @var reth_prune_senderrecovery_before:description: >
-# Prune sender recovery data before the specified block number. The specified block number is not pruned.
-reth_prune_senderrecovery_before: <BLOCK_NUMBER>
+# @var reth_prune_segments_receipts_before:description: >
+# Prune all receipts from transactions before this block number, i.e. keep receipts from this block number onwards.
+# This setting overrides `receipts_log_filter`.
+reth_prune_segments_receipts_before: 1920000
 
-# @var reth_prune_transactionlookup_full:description: >
-# Prunes all transaction lookup data.
-reth_prune_transactionlookup_full: false
+# @var reth_prune_segments_account_history_distance:description: >
+# Prune all historical account states before the block `head - <distance>`.
+reth_prune_segments_account_history_distance: 100000
 
-# @var reth_prune_transactionlookup_distance:description: >
-# Prune transaction lookup data before the `head-N` block number. In other words, keep last N + 1 blocks.
-reth_prune_transactionlookup_distance: <BLOCKS>
-
-# @var reth_prune_transactionlookup_before:description: >
-# Prune transaction lookup data before the specified block number. The specified block number is not pruned.
-reth_prune_transactionlookup_before: <BLOCK_NUMBER>
-
-# @var reth_prune_receipts_full:description: >
-# Prunes all receipt data.
-reth_prune_receipts_full: false
-
-# @var reth_prune_receipts_distance:description: >
-# Prune receipts before the `head-N` block number. In other words, keep last N + 1 blocks.
-reth_prune_receipts_distance: <BLOCKS>
-
-# @var reth_prune_receipts_before:description: >
-# Prune receipts before the specified block number. The specified block number is not pruned.
-reth_prune_receipts_before: <BLOCK_NUMBER>
-
-# @var reth_prune_accounthistory_full:description: >
-# Prunes all account history.
-reth_prune_accounthistory_full: false
-
-# @var reth_prune_accounthistory_distance:description: >
-# Prune account before the `head-N` block number. In other words, keep last N + 1 blocks.
-reth_prune_accounthistory_distance: <BLOCKS>
-
-# @var reth_prune_accounthistory_before:description: >
-# Prune account history before the specified block number. The specified block number is not pruned.
-reth_prune_accounthistory_before: <BLOCK_NUMBER>
-
-# @var reth_prune_storagehistory_full:description: >
-# Prunes all storage history data.
-reth_prune_storagehistory_full: false
-
-# @var reth_prune_storagehistory_distance:description: >
-# Prune storage history before the `head-N` block number. In other words, keep last N + 1 blocks.
-reth_prune_storagehistory_distance: <BLOCKS>
-
-# @var reth_prune_storagehistory_before:description: >
-# Prune storage history before the specified block number. The specified block number is not pruned.
-reth_prune_storagehistory_before: <BLOCK_NUMBER>
-
-# @var reth_prune_receiptslogfilter:description: >
-# Configure receipts log filter. Format: <address>:<prune_mode>[,<address>:<prune_mode>...].
-# Where <prune_mode> can be 'full', 'distance:<blocks>', or 'before:<block_number>'.
-reth_prune_receiptslogfilter: "" # e.g., "0xaddress1:full,0xaddress2:distance:1000"
-
-# @var reth_engine_persistence_threshold:description: >
-# Configure persistence threshold for engine experimental.
-reth_engine_persistence_threshold: 2
-
-# @var reth_engine_memory_block_buffer_target:description: >
-# Configure the target number of blocks to keep in memory.
-reth_engine_memory_block_buffer_target: 2
-
-# @var reth_engine_legacy_state_root:description: >
-# Enable legacy state root.
-reth_engine_legacy_state_root: false
-
-# @var reth_engine_disable_caching_and_prewarming:description: >
-# Disable cross-block caching and parallel prewarming. Note: --engine.caching-and-prewarming has no effect.
-reth_engine_disable_caching_and_prewarming: false
-
-# @var reth_engine_state_provider_metrics:description: >
-# Enable state provider latency metrics. This allows the engine to collect and report stats about how long state provider calls took during execution,
-# but this does introduce slight overhead to state provider calls.
-reth_engine_state_provider_metrics: false
-
-# @var reth_engine_cross_block_cache_size:description: >
-# Configure the size of cross-block cache in megabytes.
-reth_engine_cross_block_cache_size: 4096
-
-# @var reth_engine_state_root_task_compare_updates:description: >
-# Enable comparing trie updates from the state root task to the trie updates from the regular state root calculation.
-reth_engine_state_root_task_compare_updates: false
-
-# @var reth_engine_accept_execution_requests_hash:description: >
-# Enables accepting requests hash instead of an array of requests in `engine_newPayloadV4`.
-reth_engine_accept_execution_requests_hash: false
-
-# @var reth_engine_max_proof_task_concurrency:description: >
-# Configure the maximum number of concurrent proof tasks.
-reth_engine_max_proof_task_concurrency: 256
-
-# @var reth_engine_reserved_cpu_cores:description: >
-# Configure the number of reserved CPU cores for non-reth processes.
-reth_engine_reserved_cpu_cores: 1
-
-# @var reth_ress_enable:description: >
-# Enable support for `ress` subprotocol.
-reth_ress_enable: false
-
-# @var reth_ress_max_active_connections:description: >
-# The maximum number of active connections for `ress` subprotocol.
-reth_ress_max_active_connections: 5
-
-# @var reth_ress_max_witness_window:description: >
-# The maximum witness lookback window.
-reth_ress_max_witness_window: 1024
-
-# @var reth_ress_witness_max_parallel:description: >
-# The maximum number of witnesses to generate in parallel.
-reth_ress_witness_max_parallel: 5
-
-# @var reth_ress_witness_cache_size:description: >
-# Witness cache size.
-reth_ress_witness_cache_size: 10
-
-# @var reth_log_stdout_format:description: >
-# The format to use for logs written to stdout.
-# Possible values: json, log-fmt, terminal.
-reth_log_stdout_format: terminal
-
-# @var reth_log_stdout_filter:description: >
-# The filter to use for logs written to stdout.
-reth_log_stdout_filter: ""
-
-# @var reth_log_file_format:description: >
-# The format to use for logs written to the log file.
-# Possible values: json, log-fmt, terminal.
-reth_log_file_format: terminal
-
-# @var reth_log_file_filter:description: >
-# The filter to use for logs written to the log file.
-reth_log_file_filter: debug
-
-# @var reth_log_file_directory:description: >
-# The path to put log files in.
-reth_log_file_directory: "<CACHE_DIR>/logs" # Reth replaces <CACHE_DIR> automatically
-
-# @var reth_log_file_max_size:description: >
-# The maximum size (in MB) of one log file.
-reth_log_file_max_size: 200
-
-# @var reth_log_file_max_files:description: >
-# The maximum amount of log files that will be stored. If set to 0, background file logging is disabled.
-reth_log_file_max_files: 5
-
-# @var reth_log_journald:description: >
-# Write logs to journald.
-reth_log_journald: false
-
-# @var reth_log_journald_filter:description: >
-# The filter to use for logs written to journald.
-reth_log_journald_filter: error
-
-# @var reth_color:description: >
-# Sets whether or not the formatter emits ANSI terminal escape codes for colors and other text formatting.
-# Possible values: always, auto, never.
-reth_color: always
+# @var reth_prune_segments_storage_history_distance:description: >
+# Prune all historical storage states before the block `head - <distance>`.
+reth_prune_segments_storage_history_distance: 100000
 
 # @var reth_verbosity:description: >
 # Set the minimum log level.
@@ -802,11 +118,7 @@ reth_color: always
 # 3: Info (-vvv)
 # 4: Debug (-vvvv)
 # 5: Traces (-vvvvv, warning: very verbose!)
-reth_verbosity: "vvvv"
-
-# @var reth_quiet:description: >
-# Silence all log output. Overrides verbosity.
-reth_quiet: false
+reth_verbosity: "vv"
 
 ### Variables from TOML config file ###
 
@@ -1053,6 +365,8 @@ reth_sessions_pending_session_timeout_secs: 20
 reth_sessions_pending_session_timeout_nanos: 0
 
 
+### Reth CLI options
+
 # @var reth_cli_default_flags:description: >
 #   A list of commonly used CLI flag strings for the Reth node.
 #   Each 'name' string should ideally be a complete CLI flag.
@@ -1067,9 +381,8 @@ reth_cli_default_options:
   - "--authrpc.addr={{ reth_authrpc_addr }}"
   - "--authrpc.port={{ reth_authrpc_port }}"
   - "--metrics={{ reth_metrics_listen_addr }}:{{ reth_metrics_listen_port }}"
-  - "--authrpc.jwtsecret={{ reth_authrpc_jwtsecret }}"
+  - "--authrpc.jwtsecret={{ reth_jwt_secret_path }}"
   - "--log.file.directory={{ reth_dir_log }}"
-  - "--{{ reth_verbosity }}"
 
 
 # @var reth_cli_custom_flags:description: >
@@ -1083,6 +396,8 @@ reth_cli_custom_options: []
 #  - "--log.file.filter={{ reth_log_file_filter }}"
 #  -  "--color={{ reth_log_color }}"
 
+
+### Reth systemd
 
 # @var reth_restart_policy:description: Restart policy for the Reth service.
 reth_systemd_restart_policy: always

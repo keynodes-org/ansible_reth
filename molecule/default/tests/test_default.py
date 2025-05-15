@@ -39,3 +39,15 @@ def test_service(host, service):
     s = host.service(service)
     assert s.is_running
     assert s.is_enabled
+
+@pytest.mark.parametrize("socket", ["tcp://127.0.0.1:8545", "tcp://127.0.0.1:8551"])
+def test_socket(host, socket):
+    s = host.socket(socket)
+    assert s.is_listening
+
+
+@pytest.mark.parametrize("command", ["curl -s http://127.0.0.1:8545","curl -s http://127.0.0.1:8551"])
+def test_port(host, command):
+    c = host.run(command)
+    assert c.stderr == ""
+    assert c.succeeded

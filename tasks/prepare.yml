@@ -7,7 +7,7 @@
 - name: Reth - user configuration
   ansible.builtin.user:
     name: "{{ reth_user }}"
-    group: "{{ reth_group }}"
+    groups: "{{ reth_group }}"
     append: true
     shell: /usr/sbin/nologin
     create_home: false

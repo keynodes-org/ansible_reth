@@ -14,7 +14,7 @@ Restart={{ reth_systemd_restart_policy }}
 RestartSec={{ reth_systemd_restart_sec }}
 TimeoutStopSec={{ reth_systemd_stop_timeout_sec }}
 
-ExecStart={{ reth_binary_path }} node \
+ExecStart={{ reth_binary_path }} node -{{ reth_verbosity }} \
     --config {{ reth_config_file }} \
     --datadir {{ reth_dir_data }} \
     --chain {{ reth_chain }} \

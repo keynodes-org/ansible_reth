@@ -58,7 +58,7 @@ How to use in playbook:
 ```yaml
 - hosts: ansible_hostname
   roles:
-    - role: ansible_reth
+    - role: keynodes.ansible_reth
 ```
 
 Variables
