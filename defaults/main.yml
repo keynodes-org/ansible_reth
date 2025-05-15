@@ -1,0 +1,412 @@
+---
+# @var reth_user:description: Username for the reth node.
+reth_user: "reth"
+
+# @var reth_group:description: Group for running the reth node.
+reth_group: "reth"
+
+# @var reth_general_owner:description: General owner for reth system files.
+reth_general_owner: root
+
+# @var reth_dir_base:description: Base directory for reth installation.
+reth_dir_base: "/opt/reth"
+
+# @var reth_dir_data:description: Directory for reth data storage.
+reth_dir_data: "{{ reth_dir_base }}/data"
+
+# @var reth_dir_config:description: Directory for reth configuration files.
+reth_dir_config: "{{ reth_dir_base }}/config"
+
+# @var reth_dir_log:description: Directory for reth log files.
+reth_dir_log: "{{ reth_dir_base }}/logs"
+
+# @var reth_binary_download_url:description: URL to download the reth binary.
+reth_binary_download_url: "https://github.com/paradigmxyz/reth/releases/download/v1.3.12/reth-v1.3.12-x86_64-unknown-linux-gnu.tar.gz"
+
+# @var reth_binary_path:description: Path to install the reth binary.
+reth_dir_binary: "/usr/local/bin"
+
+# @var reth_binary_path:description: Path the reth binary.
+reth_binary_path: "{{ reth_dir_binary }}/reth"
+
+# @var reth_dir_systemd:description: Systemd service directory for reth.
+reth_dir_systemd: "/lib/systemd/system"
+
+# @var reth_systemd_service_name:description: Systemd service name for reth.
+reth_systemd_service_name: "reth"
+
+# @var reth_jwt_secret_path:description: jwt token path for reth.
+reth_jwt_secret_path: "{{ reth_dir_config }}/jwt.hex"
+
+# @var reth_reinstall:description: Force reinstall reth binary.
+reth_reinstall: false
+
+# Ethereum network parameters
+# @var reth_chain:description: >
+# The network of the Ethereum chain.
+reth_chain: sepolia
+
+# @var reth_config_file:description: >
+# The path to the TOML configuration file to use.
+reth_config_file: "{{ reth_dir_config }}/config.toml"
+
+# @var reth_metrics_listen_addr:description: >
+# The metrics will be served at the given addr.
+reth_metrics_listen_addr: 127.0.0.1
+
+# @var reth_metrics_listen_port:description: >
+# The metrics will be served at the given port.
+reth_metrics_listen_port: 9000
+
+# @var reth_http_addr:description: >
+# Http server address to listen on.
+reth_http_addr: "127.0.0.1"
+
+# @var reth_http_port:description: >
+# Http server port to listen on.
+reth_http_port: 8545
+
+# @var reth_http_api:description: >
+# Rpc Modules to be configured for the HTTP server.
+# Possible values: admin, debug, eth, net, trace, txpool, web3, rpc, reth, ots, flashbots, miner, mev.
+# Comma-separated string e.g., "eth,net,web3".
+reth_http_api: "eth,net,web3,admin"
+
+# @var reth_http_corsdomain:description: >
+# Http Corsdomain to allow request from.
+reth_http_corsdomain: "*"
+
+# @var reth_authrpc_addr:description: >
+# Auth server address to listen on.
+reth_authrpc_addr: "127.0.0.1"
+
+# @var reth_authrpc_port:description: >
+# Auth server port to listen on.
+reth_authrpc_port: 8551
+
+# [prune]
+# @var reth_prune_block_interval:description: >
+# Minimum pruning interval measured in blocks.
+reth_prune_block_interval: 5
+
+# @var reth_prune_segments_sender_recovery_distance:description: >
+# Prune all transaction senders before the block `head - <distance>`, i.e. keep transaction senders for the last `<distance> + 1` blocks.
+reth_prune_segments_sender_recovery_distance: 100000
+
+# @var reth_prune_segments_transaction_lookup:description: >
+# Transaction Lookup pruning configuration. "full" indicates pruning all TxNumber => TxHash mappings.
+reth_prune_segments_transaction_lookup: "full"
+
+# @var reth_prune_segments_receipts_before:description: >
+# Prune all receipts from transactions before this block number, i.e. keep receipts from this block number onwards.
+# This setting overrides `receipts_log_filter`.
+reth_prune_segments_receipts_before: 1920000
+
+# @var reth_prune_segments_account_history_distance:description: >
+# Prune all historical account states before the block `head - <distance>`.
+reth_prune_segments_account_history_distance: 100000
+
+# @var reth_prune_segments_storage_history_distance:description: >
+# Prune all historical storage states before the block `head - <distance>`.
+reth_prune_segments_storage_history_distance: 100000
+
+# @var reth_verbosity:description: >
+# Set the minimum log level.
+# 0: Default (Info if not quiet, otherwise based on RUST_LOG or other settings)
+# 1: Errors (-v)
+# 2: Warnings (-vv)
+# 3: Info (-vvv)
+# 4: Debug (-vvvv)
+# 5: Traces (-vvvvv, warning: very verbose!)
+reth_verbosity: "vv"
+
+### Variables from TOML config file ###
+
+# [stages.headers]
+# @var reth_stages_headers_downloader_max_concurrent_requests:description: >
+# Maximum concurrent download requests for headers.
+reth_stages_headers_downloader_max_concurrent_requests: 100
+
+# @var reth_stages_headers_downloader_min_concurrent_requests:description: >
+# Minimum concurrent download requests for headers.
+reth_stages_headers_downloader_min_concurrent_requests: 5
+
+# @var reth_stages_headers_downloader_max_buffered_responses:description: >
+# Maximum buffered responses for header downloads.
+reth_stages_headers_downloader_max_buffered_responses: 100
+
+# @var reth_stages_headers_downloader_request_limit:description: >
+# Request limit for header downloads.
+reth_stages_headers_downloader_request_limit: 1000
+
+# @var reth_stages_headers_commit_threshold:description: >
+# Commit threshold for the headers stage.
+reth_stages_headers_commit_threshold: 10000
+
+# [stages.bodies]
+# @var reth_stages_bodies_downloader_request_limit:description: >
+# Request limit for body downloads.
+reth_stages_bodies_downloader_request_limit: 200
+
+# @var reth_stages_bodies_downloader_stream_batch_size:description: >
+# Stream batch size for body downloads.
+reth_stages_bodies_downloader_stream_batch_size: 1000
+
+# @var reth_stages_bodies_downloader_max_buffered_blocks_size_bytes:description: >
+# Maximum buffered blocks size in bytes for body downloads.
+reth_stages_bodies_downloader_max_buffered_blocks_size_bytes: 2147483648
+
+# @var reth_stages_bodies_downloader_min_concurrent_requests:description: >
+# Minimum concurrent download requests for bodies.
+reth_stages_bodies_downloader_min_concurrent_requests: 5
+
+# @var reth_stages_bodies_downloader_max_concurrent_requests:description: >
+# Maximum concurrent download requests for bodies.
+reth_stages_bodies_downloader_max_concurrent_requests: 100
+
+# [stages.sender_recovery]
+# @var reth_stages_sender_recovery_commit_threshold:description: >
+# Commit threshold for the sender recovery stage.
+reth_stages_sender_recovery_commit_threshold: 5000000
+
+# [stages.execution]
+# @var reth_stages_execution_max_blocks:description: >
+# Maximum blocks for the execution stage.
+reth_stages_execution_max_blocks: 500000
+
+# @var reth_stages_execution_max_changes:description: >
+# Maximum changes for the execution stage.
+reth_stages_execution_max_changes: 5000000
+
+# @var reth_stages_execution_max_cumulative_gas:description: >
+# Maximum cumulative gas for the execution stage.
+reth_stages_execution_max_cumulative_gas: 1500000000000
+
+# @var reth_stages_execution_max_duration:description: >
+# Maximum duration for the execution stage.
+reth_stages_execution_max_duration: "10m"
+
+# [stages.prune]
+# @var reth_stages_prune_commit_threshold:description: >
+# Commit threshold for the prune stage.
+reth_stages_prune_commit_threshold: 1000000
+
+# [stages.account_hashing]
+# @var reth_stages_account_hashing_clean_threshold:description: >
+# Clean threshold for the account hashing stage.
+reth_stages_account_hashing_clean_threshold: 500000
+
+# @var reth_stages_account_hashing_commit_threshold:description: >
+# Commit threshold for the account hashing stage.
+reth_stages_account_hashing_commit_threshold: 100000
+
+# [stages.storage_hashing]
+# @var reth_stages_storage_hashing_clean_threshold:description: >
+# Clean threshold for the storage hashing stage.
+reth_stages_storage_hashing_clean_threshold: 500000
+
+# @var reth_stages_storage_hashing_commit_threshold:description: >
+# Commit threshold for the storage hashing stage.
+reth_stages_storage_hashing_commit_threshold: 100000
+
+# [stages.merkle]
+# @var reth_stages_merkle_clean_threshold:description: >
+# Clean threshold for the Merkle stage.
+reth_stages_merkle_clean_threshold: 5000
+
+# [stages.transaction_lookup]
+# @var reth_stages_transaction_lookup_chunk_size:description: >
+# Chunk size for the transaction lookup stage.
+reth_stages_transaction_lookup_chunk_size: 5000000
+
+# [stages.index_account_history]
+# @var reth_stages_index_account_history_commit_threshold:description: >
+# Commit threshold for the index account history stage.
+reth_stages_index_account_history_commit_threshold: 100000
+
+# [stages.index_storage_history]
+# @var reth_stages_index_storage_history_commit_threshold:description: >
+# Commit threshold for the index storage history stage.
+reth_stages_index_storage_history_commit_threshold: 100000
+
+# [stages.etl]
+# @var reth_stages_etl_file_size:description: >
+# File size for the ETL stage.
+reth_stages_etl_file_size: 524288000
+
+# [peers]
+# @var reth_peers_refill_slots_interval:description: >
+# Interval to refill peer slots.
+reth_peers_refill_slots_interval: "5s"
+
+# @var reth_peers_trusted_nodes:description: >
+# List of trusted peer enode URLs.
+reth_peers_trusted_nodes: [] # e.g., ["enode://...", "enode://..."]
+
+# @var reth_peers_trusted_nodes_only:description: >
+# Connect only to trusted nodes.
+reth_peers_trusted_nodes_only: false
+
+# @var reth_peers_max_backoff_count:description: >
+# Maximum backoff count for peer connections.
+reth_peers_max_backoff_count: 5
+
+# @var reth_peers_ban_duration:description: >
+# Duration for banning misbehaving peers.
+reth_peers_ban_duration: "12h"
+
+# @var reth_peers_incoming_ip_throttle_duration:description: >
+# Duration to throttle incoming connections from the same IP.
+reth_peers_incoming_ip_throttle_duration: "30s"
+
+# [peers.connection_info]
+# @var reth_peers_connection_info_max_outbound:description: >
+# Maximum outbound peer connections. (Note: CLI --max-outbound-peers overrides this if set)
+reth_peers_connection_info_max_outbound: 100
+
+# @var reth_peers_connection_info_max_inbound:description: >
+# Maximum inbound peer connections. (Note: CLI --max-inbound-peers overrides this if set)
+reth_peers_connection_info_max_inbound: 30
+
+# @var reth_peers_connection_info_max_concurrent_outbound_dials:description: >
+# Maximum concurrent outbound dials.
+reth_peers_connection_info_max_concurrent_outbound_dials: 15
+
+# [peers.reputation_weights]
+# @var reth_peers_reputation_weights_bad_message:description: >
+# Reputation weight for a bad message.
+reth_peers_reputation_weights_bad_message: -16384
+
+# @var reth_peers_reputation_weights_bad_block:description: >
+# Reputation weight for a bad block.
+reth_peers_reputation_weights_bad_block: -16384
+
+# @var reth_peers_reputation_weights_bad_transactions:description: >
+# Reputation weight for bad transactions.
+reth_peers_reputation_weights_bad_transactions: -16384
+
+# @var reth_peers_reputation_weights_already_seen_transactions:description: >
+# Reputation weight for already seen transactions.
+reth_peers_reputation_weights_already_seen_transactions: 0
+
+# @var reth_peers_reputation_weights_timeout:description: >
+# Reputation weight for a timeout.
+reth_peers_reputation_weights_timeout: -4096
+
+# @var reth_peers_reputation_weights_bad_protocol:description: >
+# Reputation weight for a bad protocol.
+reth_peers_reputation_weights_bad_protocol: -2147483648
+
+# @var reth_peers_reputation_weights_failed_to_connect:description: >
+# Reputation weight for a failed connection attempt.
+reth_peers_reputation_weights_failed_to_connect: -25600
+
+# @var reth_peers_reputation_weights_dropped:description: >
+# Reputation weight for a dropped peer.
+reth_peers_reputation_weights_dropped: -4096
+
+# @var reth_peers_reputation_weights_bad_announcement:description: >
+# Reputation weight for a bad announcement.
+reth_peers_reputation_weights_bad_announcement: -1024
+
+# [peers.backoff_durations]
+# @var reth_peers_backoff_durations_low:description: >
+# Low backoff duration for peer connections.
+reth_peers_backoff_durations_low: "30s"
+
+# @var reth_peers_backoff_durations_medium:description: >
+# Medium backoff duration for peer connections.
+reth_peers_backoff_durations_medium: "3m"
+
+# @var reth_peers_backoff_durations_high:description: >
+# High backoff duration for peer connections.
+reth_peers_backoff_durations_high: "15m"
+
+# @var reth_peers_backoff_durations_max:description: >
+# Maximum backoff duration for peer connections.
+reth_peers_backoff_durations_max: "1h"
+
+# [sessions]
+# @var reth_sessions_session_command_buffer:description: >
+# Buffer size for session commands.
+reth_sessions_session_command_buffer: 32
+
+# @var reth_sessions_session_event_buffer:description: >
+# Buffer size for session events.
+reth_sessions_session_event_buffer: 260
+
+# [sessions.limits] - This section is empty in the provided config.
+
+# [sessions.initial_internal_request_timeout]
+# @var reth_sessions_initial_internal_request_timeout_secs:description: >
+# Seconds for initial internal request timeout.
+reth_sessions_initial_internal_request_timeout_secs: 20
+
+# @var reth_sessions_initial_internal_request_timeout_nanos:description: >
+# Nanoseconds for initial internal request timeout.
+reth_sessions_initial_internal_request_timeout_nanos: 0
+
+# [sessions.protocol_breach_request_timeout]
+# @var reth_sessions_protocol_breach_request_timeout_secs:description: >
+# Seconds for protocol breach request timeout.
+reth_sessions_protocol_breach_request_timeout_secs: 120
+
+# @var reth_sessions_protocol_breach_request_timeout_nanos:description: >
+# Nanoseconds for protocol breach request timeout.
+reth_sessions_protocol_breach_request_timeout_nanos: 0
+
+# [sessions.pending_session_timeout]
+# @var reth_sessions_pending_session_timeout_secs:description: >
+# Seconds for pending session timeout.
+reth_sessions_pending_session_timeout_secs: 20
+
+# @var reth_sessions_pending_session_timeout_nanos:description: >
+# Nanoseconds for pending session timeout.
+reth_sessions_pending_session_timeout_nanos: 0
+
+
+### Reth CLI options
+
+# @var reth_cli_default_flags:description: >
+#   A list of commonly used CLI flag strings for the Reth node.
+#   Each 'name' string should ideally be a complete CLI flag.
+#   If a value is templated (e.g., --option={{ var }}), 'var' should be defined.
+#   The presence of an item in this list implies the flag should be considered for addition.
+reth_cli_default_options:
+  - "--full"
+  - "--http"
+  - "--http.addr={{ reth_http_addr }}"
+  - "--http.port={{ reth_http_port }}"
+  - "--http.api={{ reth_http_api }}"
+  - "--authrpc.addr={{ reth_authrpc_addr }}"
+  - "--authrpc.port={{ reth_authrpc_port }}"
+  - "--metrics={{ reth_metrics_listen_addr }}:{{ reth_metrics_listen_port }}"
+  - "--authrpc.jwtsecret={{ reth_jwt_secret_path }}"
+  - "--log.file.directory={{ reth_dir_log }}"
+
+
+# @var reth_cli_custom_flags:description: >
+#   A list of additional, literal command-line flags for the reth node.
+#   Each item is a complete flag string, e.g., "--full" or "--txpool.max-account-slots=32".
+reth_cli_custom_options: []
+# Example:
+#  - "--txpool.nolocals"
+#  - "--nat=extip:YOUR_EXTERNAL_IP"
+#  - "--log.stdout.filter={{ reth_log_stdout_filter }}"
+#  - "--log.file.filter={{ reth_log_file_filter }}"
+#  -  "--color={{ reth_log_color }}"
+
+
+### Reth systemd
+
+# @var reth_restart_policy:description: Restart policy for the Reth service.
+reth_systemd_restart_policy: always
+# @var reth_restart_sec:description: Seconds to wait before restarting the service.
+reth_systemd_restart_sec: 5
+# @var reth_stop_timeout_sec:description: Timeout in seconds when stopping the service.
+reth_systemd_stop_timeout_sec: 300
+# @var reth_limit_nofile:description: Maximum number of open files for the Reth service.
+reth_systemd_limit_nofile: 65536
+# @var reth_extra_systemd_directives:description: >
+# A list of extra directives to add to the [Service] section (e.g., "Environment=RUST_LOG=info").
+reth_extra_systemd_directives: []

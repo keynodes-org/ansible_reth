@@ -1,0 +1,17 @@
+---
+- name: Reth - import prepare tasks
+  ansible.builtin.import_tasks: prepare.yml
+  tags:
+    - reth-prepare
+    - reth-config
+    - reth-install
+
+- name: Reth - import configure tasks
+  ansible.builtin.import_tasks: configure.yml
+  tags:
+    - reth-config
+
+- name: Reth - import install tasks
+  ansible.builtin.import_tasks: install.yml
+  tags:
+    - reth-install
